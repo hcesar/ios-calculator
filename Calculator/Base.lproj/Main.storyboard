@@ -126,8 +126,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
-                                    <action selector="button4_Click:" destination="BYZ-38-t0r" eventType="touchUpInside" id="n5C-P0-T8D"/>
-                                    <action selector="touchDigit:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EOh-M6-8LT"/>
+                                    <action selector="touchDigit:forEvent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MXa-k6-MNT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZa-LH-CSz">

@@ -25,8 +25,8 @@ class ViewController: UIViewController {
                 self.currentValue += self.operand
             
             case Operations.subtraction:
-                self.currentValue -= self.operand
-            
+                self.currentValue = self.operand - self.currentValue
+
             case Operations.division:
                 self.currentValue = self.operand / self.currentValue
             
