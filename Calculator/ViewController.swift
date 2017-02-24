@@ -14,10 +14,16 @@ class ViewController: UIViewController {
     var operand = 0.0
     var operation :Operations?
     var flushOnOperation = false
+    var decimalPlaces = 0
+    var decimalPlacesSelected = false
+    
+    @IBOutlet weak var resultLabel: UILabel!
     
     func updateValue(){
-        self.resultLabel.text = String(currentValue)
+        let format = "%." + String(self.decimalPlaces-1) + "f"
+        self.resultLabel.text = String(format: format, currentValue)
     }
+
     func flushCalc(){
         
         switch self.operation! {
@@ -40,7 +46,10 @@ class ViewController: UIViewController {
 
     }
     
-    @IBOutlet weak var resultLabel: UILabel!
+    func resetDecimalPlaces(){
+        self.decimalPlacesSelected = false
+        self.decimalPlaces = 0
+    }
     
     @IBAction func flushCalc(_ sender: UIButton) {
         if self.operation != nil{
@@ -52,15 +61,26 @@ class ViewController: UIViewController {
         self.currentValue = 0.0
         self.operation = nil
         self.operand = 0.0
-        updateValue()
+        self.resetDecimalPlaces()
+        self.updateValue()
     }
     
     @IBAction func touchDigit(_ sender: UIButton, forEvent event: UIEvent) {
-        let value = Double(sender.currentTitle!)!
-        currentValue *= 10
-        currentValue += value
+        var value = Double(sender.currentTitle!)!
+        
+        if(decimalPlacesSelected){
+            value = (value / pow(10, Double(self.decimalPlaces)))
+            self.decimalPlaces += 1
+            currentValue += value
+        }
+        else{
+            currentValue *= 10
+            currentValue += value
+        }
+        
         updateValue()
         self.flushOnOperation = true
+        
     }
     
     @IBAction func touchOperation(_ sender: UIButton) {
@@ -79,8 +99,36 @@ class ViewController: UIViewController {
         self.operand = self.currentValue
         self.currentValue = 0.0
         self.flushOnOperation = false
+        self.resetDecimalPlaces()
     }
     
+    @IBAction func touchSignInverter(_ sender: UIButton) {
+        if self.operation != nil{
+            self.flushCalc()
+        }
+        self.currentValue = -self.currentValue
+        self.updateValue()
+    }
+    
+    @IBAction func touchPercent(_ sender: UIButton) {
+        if self.operation != nil{
+            self.currentValue = (self.operand * (self.currentValue / 100))
+        }
+        else{
+            self.currentValue = (self.currentValue / 100)
+        }
+        
+        self.updateValue()
+        self.resetDecimalPlaces()
+    }
+    
+    @IBAction func touchDot(_ sender: UIButton) {
+        if !self.decimalPlacesSelected{
+            self.decimalPlacesSelected = true;
+            self.decimalPlaces = 1;
+            self.updateValue()
+        }
+    }
 }
 
 
